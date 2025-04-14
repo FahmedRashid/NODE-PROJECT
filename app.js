@@ -1,32 +1,40 @@
 const express = require('express');
-
 //express app
 const app = express();
-
 //register view engine ejs
 app.set('view engine', 'ejs'); // by default ejs knows to check the view folder
-
 // listen for request
 app.listen(3000);
 
+app.use((req, res)=>{
+    console.log('new request made:');
+    console.log('host: ', req.hostname);
+    console.log('path: ', req.path);
+    console.log('method: ', req.method);
+});
+
 app.get('/', (req, res) =>{
-   // res.send('<p>home page</p>');
-   res.render('index');
+    const blogs = [
+        {title: 'The first test blog', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+        {title: 'The second test blog', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+        {title: 'The third  test blog', snippet: 'Lorem ipsum dolor sit amet consectetur'}
+    ];
+   res.render('index', {title: 'Home', blogs: blogs});
 })
 app.get('/about', (req, res) =>{
     //res.send('<p>About Page</p>');
-    res.render('about');
+    res.render('about', {title: 'About'});
 })
 app.get('/import', (req, res) => {
     //Import page
-    res.render('import');
+    res.render('import', {title: 'Import'});
 })
 
 app.get('/blogs/create', (req, res) =>{
-    res.render('create');
+    res.render('create', {title: 'Create'});
 })
 
 // 404 page the app.use() needs to be used at the last.
 app.use((req, res) => {
-    res.status(404).render('404');
+    res.status(404).render('404', {title: '404'});
 })
