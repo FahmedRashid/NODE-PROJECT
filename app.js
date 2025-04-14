@@ -7,6 +7,9 @@ app.set('view engine', 'ejs'); // by default ejs knows to check the view folder
 // listen for request
 app.listen(3000);
 
+// middleware static files like css templates.
+app.use(express.static('public'));
+
 app.use(morgan('dev'));
 
 app.get('/', (req, res) =>{
