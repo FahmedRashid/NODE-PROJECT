@@ -10,7 +10,7 @@
             <p><%= blog.body %></p>
         </div>
         <a href="/blogs/<%= blog._id %>/edit" class="update">Update</a>
-        <a class="delete" dota-doc="<%= blog._id%>">Delete</a>
+        <a class="delete" data-doc="<%= blog._id%>">Delete</a>
     </div>
     <%- include('./partials/footer.ejs')  %>
 
