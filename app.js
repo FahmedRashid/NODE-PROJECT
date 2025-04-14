@@ -24,15 +24,6 @@ app.use(morgan('dev'));
 
 
 
-//routes
-app.get('/', (req, res) =>{
-    res.redirect('/blogs');
-})
-app.get('/about', (req, res) =>{
-    //res.send('<p>About Page</p>');
-    res.render('about', {title: 'About'});
-})
-
 //blog routes --------------------------
 app.get('/blogs', (req, res) =>{
     Blog.find().sort( {createdAt: -1})
@@ -100,6 +91,15 @@ app.put('/blogs/:id', (req, res) =>{
     .catch((err)=>{
         console.log(err);
     })
+})
+
+//routes
+app.get('/', (req, res) =>{
+    res.redirect('/blogs');
+})
+app.get('/about', (req, res) =>{
+    //res.send('<p>About Page</p>');
+    res.render('about', {title: 'About'});
 })
 
 app.get('/import', (req, res) => {

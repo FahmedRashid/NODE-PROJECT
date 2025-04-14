@@ -161,7 +161,6 @@ textarea {
   border-radius: 6px;
   font-size: 1rem;
 }
-
 label {
   margin-top: 16px;
   display: block;
@@ -172,8 +171,8 @@ label {
 textarea {
   height: 100px;
   min-height: 100px;
-  resize: none; /* Prevent any manual resizing */
-  overflow-y: hidden; /* Let JS control vertical expansion */
+  resize: none;
+  overflow-y: hidden;
   line-height: 1.4;
 }
 
@@ -193,12 +192,34 @@ button:hover {
   background-color: #a1032f;
 }
 
-/* 404 */
+/* 404 - Exclusive, dark blurred, animated, glassmorphism */
+body:has(.not-found) {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  color: #eee;
+}
+
 .not-found {
+  position: relative;
+  margin: 80px auto;
+  padding: 60px 30px;
   text-align: center;
-  font-size: 1.4rem;
-  padding: 60px;
-  color: #888;
+  font-size: 2.2rem;
+  max-width: 600px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  animation: fadeIn 0.7s ease-in-out;
+  z-index: 10;
+}
+.not-found::before {
+  content: "👾 404";
+  display: block;
+  font-size: 2.8rem;
+  color: crimson;
+  margin-bottom: 12px;
+  font-weight: bold;
 }
 
 /* About Page */
@@ -223,5 +244,17 @@ button:hover {
   .action-buttons {
     flex-direction: column;
     align-items: flex-end;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

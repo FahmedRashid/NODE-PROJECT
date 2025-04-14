@@ -11,6 +11,9 @@
             <input type="text" id="snippet" name="snippet" value="<%= blog.snippet %>" required>
             <label for="body">Blog body</label>
             <textarea id="body" name="body" required><%= blog.body %></textarea>
+            <div id="char-count" style="text-align: right; font-size: 0.9rem; color: #666; margin-top: 4px;">
+                0 / 500 characters
+            </div>
             <button type="submit">Save Changes</button>
         </form>
     </div>
@@ -43,14 +46,32 @@
             })
             .catch(err => console.log(err));
         });
-        document.addEventListener('DOMContentLoaded', function () {
-              const textarea = document.querySelector('textarea');
-          
-              textarea.addEventListener('input', function () {
-                this.style.height = '100px'; // Reset to base height
-                this.style.height = (this.scrollHeight) + 'px'; // Expand if needed
-              });
-            });
+
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const textarea = document.getElementById('body');
+          const charCount = document.getElementById('char-count');
+          const softLimit = 500;
+  
+          const updateTextArea = () => {
+            textarea.style.height = '100px';
+            textarea.style.height = textarea.scrollHeight + 'px';
+  
+            const length = textarea.value.length;
+            charCount.textContent = `${length} / ${softLimit} characters`;
+  
+            // Soft limit color change
+            if (length > softLimit) {
+              charCount.style.color = 'crimson';
+            } else {
+              charCount.style.color = '#666';
+            }
+          };
+  
+          textarea.addEventListener('input', updateTextArea);
+          window.addEventListener('load', updateTextArea);
+        });
+      </script>
 </body>
 </html>
