@@ -19,6 +19,7 @@ app.set('view engine', 'ejs'); // by default ejs knows to check  the view folder
 // middleware static files like css templates.
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(morgan('dev'));
 
 
@@ -80,6 +81,26 @@ app.delete('/blogs/:id', (req, res)=>{
 })
 
 //update request
+app.get('/blogs/:id/edit', (req, res) =>{
+    const id = req.params.id;
+    Blog.findById(id)
+    .then(result =>{
+        res.render('edit', { blog: result, title: 'Edit Blog'});
+    })
+    .catch(err =>{
+        console.log(err);
+    })
+})
+app.put('/blogs/:id', (req, res) =>{
+    const id = req.params.id;
+    Blog.findByIdAndUpdate(id, req.body)
+    .then(result => {
+        res.json({ redirect: '/blogs' })
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+})
 
 app.get('/import', (req, res) => {
     //Import page
@@ -89,6 +110,7 @@ app.get('/import', (req, res) => {
 app.get('/create', (req, res) =>{
     res.render('create', {title: 'Create'});
 })
+
 
 // 404 page the app.use() needs to be used at the last.
 app.use((req, res) => {

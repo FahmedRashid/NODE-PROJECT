@@ -9,7 +9,7 @@
         <div class="content">
             <p><%= blog.body %></p>
         </div>
-        <a class="update" data-doc="<%= blog._id%>">Update</a>
+        <a href="/blogs/<%= blog._id %>/edit" class="update">Update</a>
         <a class="delete" data-doc="<%= blog._id%>">Delete</a>
     </div>
     <%- include('./partials/footer.ejs')  %>
@@ -26,8 +26,6 @@
             .then((data) => window.location.href = data.redirect)
             .catch((err)=> console.log(err));
         })
-
-        // const update = document
     </script>
 </body>
 </html>

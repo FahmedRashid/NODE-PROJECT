@@ -1,0 +1,56 @@
+<html lang="en">
+<%- include('./partials/head.ejs')%>
+<body>
+    <%- include('./partials/nav.ejs') %>
+
+    <div class="edit-blog content">
+        <form id="edit-form">
+            <label for="title">Blog title</label>
+            <input type="text" id="title" name="title" value="<%= blog.title %>" required>
+            <label for="snippet">Blog snippet:</label>
+            <input type="text" id="snippet" name="snippet" value="<%= blog.snippet %>" required>
+            <label for="body">Blog body</label>
+            <textarea id="body" name="body" required><%= blog.body %></textarea>
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+
+    <%- include('./partials/footer.ejs') %>
+
+    <script>
+        const form = document.getElementById('edit-form');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const blogId = "<%= blog._id %>";
+            const endpoint = `/blogs/${blogId}`;
+
+            fetch(endpoint, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: form.title.value,
+                    snippet: form.snippet.value,
+                    body: form.body.value
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                window.location.href = data.redirect;
+            })
+            .catch(err => console.log(err));
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+              const textarea = document.querySelector('textarea');
+          
+              textarea.addEventListener('input', function () {
+                this.style.height = '100px'; // Reset to base height
+                this.style.height = (this.scrollHeight) + 'px'; // Expand if needed
+              });
+            });
+    </script>
+</body>
+</html>
